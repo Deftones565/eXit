@@ -1,7 +1,5 @@
 import UI
-import msvcrt as m
 import os
-
 
 class main():
 
@@ -44,10 +42,16 @@ class main():
         self.count = 0
 
     def anyKey(self):
-        print("Press any key to start")
-        m.getch()
-        os.system("cls")
+        input("Press any key to start")
+        self.clearConsole()
 
+    def clearConsole(self):
+        #too slow
+        #command = 'clear'
+        #if os.name in ('nt', 'dos'):  # If Machine is running on Windows (nt) or DOS.
+        #    command = 'cls'
+        #os.system(command)
+        print('\033c', end='')
 
     def helloFriend(self):
         self.UI.changeScreen(str(self.count))
@@ -55,21 +59,22 @@ class main():
         self.count += 1
         for s, a in zip(self.story, self.answers):
             self.UI.changeScreen(str(self.count))
-            while(1):
+            while True:
                 print(s)
                 answer = input("> ")
-                if(answer == a):
+                if answer.lower() == a.lower():
                     self.count += 1
-                    os.system("cls")
+                    self.clearConsole()
                     break
                 else:
-                    os.system("cls")
+                    self.clearConsole()
                     self.UI.changeScreen(str(self.count))
                     print(self.inncorrect[self.inncorrectCount])
                     self.inncorrectCount += 1
-                    if(self.inncorrectCount == 7):
+                    if self.inncorrectCount == 7:
                         self.inncorrectCount = 0
 
-if(__name__ == "__main__"):
+if __name__ == "__main__":
     bonsoirElliot = main()
     bonsoirElliot.helloFriend()
+
